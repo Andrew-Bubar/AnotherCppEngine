@@ -1,5 +1,5 @@
 
-
+#include "AnotherCppEngine_lib.h"
 
 // Platform Functions
 bool platform_create_windows(int width, int height, char* title);
@@ -90,17 +90,21 @@ void platform_update_window(){
 
 #endif
 
-#include <iostream>
+
 
 int main(){
 
     if(!platform_create_windows(1200, 720, "AnotherCppEngine")){
-        std::cout << "Sad";
+        
     }
 
+    SM_TRACE("test");
+    SM_WARN("test");
+    SM_ERROR("Test");
 
     while(isRunning){
         platform_update_window();
+        SM_ASSERT(false, "Assert not hit!");
     }
 
     return 0;
