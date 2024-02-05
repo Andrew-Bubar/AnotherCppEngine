@@ -1,8 +1,13 @@
 
 #pragma once
 
+/*
+********************************************************************************
+            All the varribles for more general systems and varribles
+********************************************************************************
+*/
 
-static bool isRunning;
+static bool isRunning; //for the while loop
 
 // Platform Functions
 bool platform_create_windows(int width, int height, char* title);

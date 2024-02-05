@@ -31,23 +31,26 @@ LRESULT CALLBACK windows_window_callback(HWND window, UINT msg,
     return result;
 }
 
-bool platform_create_windows(int width, int height, char* title){
+bool platform_create_windows(int width, int height, char* title){ //making the window for ... Windows
 
     HINSTANCE instance = GetModuleHandleA(0);
 
-    WNDCLASSA wc = {};
+    WNDCLASSA wc = {}; //making an empty window class
+
+    //setting up the class
     wc.hInstance = instance;
     wc.hIcon = LoadIcon(instance, IDI_APPLICATION);
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     wc.lpszClassName = title;
     wc.lpfnWndProc = windows_window_callback;
 
-    if(!RegisterClassA(&wc)){
+    if(!RegisterClassA(&wc)){ //did window class work?
         return false;
     }
 
     int dwStyle = WS_OVERLAPPEDWINDOW;
 
+    //Making the window
     window = CreateWindowExA(0,
     title,      //this is the lpsz from the wc class
     title,      //this is the title bar string
@@ -66,12 +69,12 @@ bool platform_create_windows(int width, int height, char* title){
         return false;
     }
 
-    ShowWindow(window, SW_SHOW);
+    ShowWindow(window, SW_SHOW); //show the window
 
     return true;
 }
 
-void platform_update_window(){
+void platform_update_window(){ //take in inputs for the window
 
     MSG msg;
 
@@ -81,20 +84,20 @@ void platform_update_window(){
     }
 }
 
-void* platform_load_gl_function(char* funcName){
-    PROC proc = wglGetProcAddress(funcName); 
+void* platform_load_gl_function(char* funcName){ //a general function for loading opengl things
+    PROC proc = wglGetProcAddress(funcName); //get the class as char array
 
-    if(!proc){ 
+    if(!proc){ //if it didnt load
 
-        static HMODULE openglDLL = LoadLibraryA("opengl32.dll");
+        static HMODULE openglDLL = LoadLibraryA("opengl32.dll"); //get the raw dll from the GPU driver
 
-        proc =  GetProcAddress(openglDLL, funcName);
+        proc =  GetProcAddress(openglDLL, funcName); //try again
 
-        if(!proc){
+        if(!proc){ //if didn't
             SM_ASSERT(false, "flailed to load open gl %s", "glCreateProgram");
-            return nullptr;
+            return nullptr; //return null
         }
     }
 
-    return (void*)proc;
+    return (void*)proc; //output the function
 }

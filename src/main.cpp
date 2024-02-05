@@ -3,11 +3,11 @@
 #include "platform.h"
 
 //Windows Platform Functions
-#ifdef _WIN32
+#ifdef _WIN32 //is the OS windows?
 #include "win32_platform.cpp"
 #endif
 
-#include "gl_renderer.h"
+#include "gl_renderer.h" //this has to be after the platform functions so it loads properly
 
 
 int main(){
